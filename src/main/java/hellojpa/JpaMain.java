@@ -19,19 +19,11 @@ public class JpaMain {
             // 비영속
             Member member = new Member();
             member.setId(101L);
-            member.setName("HelloJPA");
+            member.setUsername("HelloJPA");
+            member.setRoleType(RoleType.USER);
             // 영속(영속 상태가 돼도 바로 DB에 쿼리가 날아가지 않는다
-            System.out.println("===========BEFORE===========");
-//            em.persist(member);
-            System.out.println("===========AFTER===========");
+            em.persist(member);
 
-            Member findMember1 = em.find(Member.class, 101L);
-            Member findMember2 = em.find(Member.class, 101L);
-
-            System.out.println("findMember.id = " + findMember1.getId());
-            System.out.println("findMember.name = " + findMember2.getName());
-
-            System.out.println("result = " + (findMember1 == findMember2));
             // 수정
 //            Member findmember = em.find(Member.class, 1L);
 //            findmember.setName("HelloJPA");
