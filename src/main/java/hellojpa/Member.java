@@ -12,6 +12,8 @@ public class Member {
     @Id
     private Long id;
 //    @Column(name="name")
+    // DDL 생성기능은 JPA 실행 로직에는 영향을 주지 않고 DDL 자동 생성될 때에만 사용됨
+    @Column(unique = true, length = 10)
     private String name;
 
     public Long getId() {
