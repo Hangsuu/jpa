@@ -40,4 +40,9 @@ public class Team {
     public void setName(String name) {
         this.name = name;
     }
+
+    public void addMember(MemberOneWayMapping member) {
+        member.setTeam(this);
+        members.add(member);
+    }
 }

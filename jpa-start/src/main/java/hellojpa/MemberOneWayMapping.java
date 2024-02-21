@@ -38,6 +38,12 @@ public class MemberOneWayMapping {
         return team;
     }
 
+    public void changeTeam(Team team) {
+        this.team = team;
+        // 연관관계 편의 메서드
+        team.getMembers().add(this);
+    }
+
     public void setTeam(Team team) {
         this.team = team;
     }
