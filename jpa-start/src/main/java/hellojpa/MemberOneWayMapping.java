@@ -16,6 +16,9 @@ public class MemberOneWayMapping {
 //    private Long teamId;
     @ManyToOne
     @JoinColumn(name = "TEAM_ID")
+    // 일대다 양방향의 경우 매핑이 되어 있는 읽기 전용으로 만들어줘야됨 (다대일 양방향 사용 권장)
+//    @ManyToOne
+//    @JoinColumn(name="TEAM_ID", insertable = false, updatable = false)
     private Team team;
 
     public Long getId() {
