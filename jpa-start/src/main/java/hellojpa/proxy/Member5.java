@@ -1,16 +1,21 @@
-package hellojpa;
+package hellojpa.proxy;
 
+import hellojpa.Locker;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="member4")
-public class MemberOneToOneMapping {
+@Table(name="member5")
+public class Member5 extends BaseEntity {
     @Id @GeneratedValue
     @Column(name = "MEMBER_ID")
     private Long id;
 
     @Column(name="USERNAME")
     private String username;
+
+    @ManyToOne
+    @JoinColumn(name="TEAM_ID", insertable = false, updatable = false)
+    private Team5 team;
 
     @OneToOne
     @JoinColumn(name="LOCKER_ID")
@@ -30,6 +35,14 @@ public class MemberOneToOneMapping {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Team5 getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team5 team) {
+        this.team = team;
     }
 
     public Locker getLocker() {

@@ -1,5 +1,6 @@
 package hellojpa;
 
+import hellojpa.proxy.Member5;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -13,5 +14,5 @@ public class Locker {
     private String name;
 
     @OneToOne(mappedBy = "locker")
-    private MemberOneToOneMapping member;
+    private Member5 member5;
 }
