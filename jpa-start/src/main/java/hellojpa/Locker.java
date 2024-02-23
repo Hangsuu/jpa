@@ -14,5 +14,5 @@ public class Locker {
     private String name;
 
     @OneToOne(mappedBy = "locker")
-    private Member5 member5;
+    private MemberOneWayMapping member;
 }
