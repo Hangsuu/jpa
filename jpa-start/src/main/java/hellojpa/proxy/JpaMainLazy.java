@@ -41,7 +41,7 @@ public class JpaMainLazy {
 
             // 실무에서는 가급적 지연로딩 사용, fetch join으로 해결 가능
             // @ManyToOne, @OneToOne은 default가 EAGER로 되어 있어 LAZY로 직접 변환 필요
-            List<Member5> members = em.createQuery("select m from Member5 m join fetch m.team", Member5.class)
+            List<Member5> members = em.createQuery("select m from Member6 m join fetch m.team", Member5.class)
                             .getResultList();
 
             tx.commit();
