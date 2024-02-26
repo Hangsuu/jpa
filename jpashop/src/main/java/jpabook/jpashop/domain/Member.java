@@ -11,20 +11,13 @@ public class Member extends BaseEntity {
     @Column(name="MEMBER_ID")
     private Long id;
     private String name;
-    private String city;
-    private String street;
-    private String zipcode;
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
-
-    @OneToMany(mappedBy = "member")
-    private List<Order> orders = new ArrayList<>();
+    @Embedded
+    private Address address;
+    private DeliveryStatus status;
+//    @OneToMany(mappedBy = "member")
+//    private List<Order> orders = new ArrayList<>();
+    @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)
+    private Order order;
 
     public Long getId() {
         return id;
@@ -42,27 +35,27 @@ public class Member extends BaseEntity {
         this.name = name;
     }
 
-    public String getCity() {
-        return city;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
-    public String getStreet() {
-        return street;
+    public DeliveryStatus getStatus() {
+        return status;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setStatus(DeliveryStatus status) {
+        this.status = status;
     }
 
-    public String getZipcode() {
-        return zipcode;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }
