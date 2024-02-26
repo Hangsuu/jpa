@@ -35,6 +35,9 @@ public class JpaMainJoin {
             String query2 = "select m from Member m, Team t where m.username = t.name";
             List<Member> result2 = em.createQuery(query2, Member.class).getResultList();
 
+            String query3 = "select m from Member m left join Team t on m.username = t.name";
+            List<Member> result3 = em.createQuery(query2, Member.class).getResultList();
+
             tx.commit();
         } catch(Exception e) {
             tx.rollback();
