@@ -19,10 +19,12 @@ public class JpaMain {
             member.setAge(10);
             em.persist(member);
 
+            em.flush();
+            em.clear();
             // TypeQuery : 반환 타입이 명확할 때
             TypedQuery<Member> query = em.createQuery("select m from Member m", Member.class);
             // Query : 반환 타입이 명확하지 않을 때
-            Query query2 = em.createQuery("select m.username, m.age from Member m");
+            List<Object[]> query2 = em.createQuery("select m.username, m.age from Member m").getResultList();
 
             // 결과 조회
             List<Member> resultList = query.getResultList();
@@ -33,7 +35,16 @@ public class JpaMain {
             TypedQuery<Member> query3 = em.createQuery("select m from Member m where m.username = :username", Member.class);
             query3.setParameter("username", "member1");
             Member singleResult = query.getSingleResult();
-            System.out.println("singResult = " + singleResult   );
+            System.out.println("singResult = " + singleResult);
+
+            Object[] result = query2.get(0);
+            System.out.println("username = " + result[0]);
+            System.out.println("age = " + result[1] );
+
+            List<MemberDto> query4 = em.createQuery("select new hellojpa.jpql.MemberDto(m.username, m.age) from Member m", MemberDto.class).getResultList();
+            MemberDto memberDto = query4.get(0);
+            System.out.println("MemberDto = " + memberDto.getUsername());
+            System.out.println("MemberDto = " + memberDto.getAge());
 
             tx.commit();
         } catch(Exception e) {
