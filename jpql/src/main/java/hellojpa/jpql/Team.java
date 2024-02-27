@@ -1,6 +1,7 @@
 package hellojpa.jpql;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,8 @@ public class Team {
 
     private String name;
 
+    // 글로벌 세팅 가능
+//    @BatchSize(size=100)
     @OneToMany(mappedBy = "team")
     private List<Member> members = new ArrayList<>();
 

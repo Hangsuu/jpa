@@ -19,6 +19,7 @@
             <!-- update:변경분만 반영 / validate: 엔티티와 테이블이 정상 매핑되었는지 확인 -->
             <!-- none : 사용하지 않음 -->
             <property name="hibernate.hbm2ddl.auto" value="create" />
+            <property name="hibernate.default_bvatch_fetch_size" value="100" />
         </properties>
     </persistence-unit>
 
