@@ -32,6 +32,9 @@ public class JpaMainFunction {
 
             String query = "select concat('a', 'b') From Member m";
             List<String> result = em.createQuery(query, String.class).getResultList();
+            // 묵시적 조인은 사용하지 말고 명시적 조인을 사용해라(쿼리튜닝 힘듬)
+            // select t.members.username from Team t => 실패(collection은 더이상 호출 불가)
+            // select m.username from Team t join t.members m => 성공
 
             for (String s : result) {
                 System.out.println("s = " + s);
