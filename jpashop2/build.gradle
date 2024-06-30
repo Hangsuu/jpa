@@ -40,6 +40,11 @@ dependencies {
 	// lombok(Slf4j) for test
 	testCompileOnly 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
+
+	// Jakarta Validation API
+	implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
+	// Hibernate Validator
+	implementation 'org.hibernate.validator:hibernate-validator:7.0.4.Final'
 }
 
 tasks.named('test') {

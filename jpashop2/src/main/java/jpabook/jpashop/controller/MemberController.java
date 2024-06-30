@@ -1,5 +1,6 @@
 package jpabook.jpashop.controller;
 
+import jakarta.validation.Valid;
 import jpabook.jpashop.domain.Address;
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.service.MemberService;
@@ -25,10 +26,10 @@ public class MemberController {
     }
 
     @PostMapping("/members/new")
-    public String create(MemberForm memberForm, BindingResult result) {
+    public String create(@Valid MemberForm memberForm, BindingResult result) {
 
         if(result.hasErrors()) {
-            log.info("여기 들어옴");
+            log.info("폼 검증 에러 발생: {}", result.getAllErrors());
             return "members/createMemberForm";
         }
 
@@ -39,7 +40,6 @@ public class MemberController {
         member.setAddress(address);
 
         memberService.join(member);
-
 
         return "redirect:/";
     }
