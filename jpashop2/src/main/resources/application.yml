@@ -13,6 +13,9 @@ spring:
 #        show_sql: true
         format_sql: true
         dialect: org.hibernate.dialect.H2Dialect
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
 
 logging:
   level:
