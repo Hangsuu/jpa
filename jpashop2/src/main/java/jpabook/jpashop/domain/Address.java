@@ -6,7 +6,7 @@ import lombok.Getter;
 @Embeddable
 @Getter
 public class Address {
-    private String cty ;
+    private String city ;
     private String street;
     private String zipcode;
 
@@ -15,8 +15,8 @@ public class Address {
     protected Address() {
     }
 
-    public Address(String cty, String street, String zipcode) {
-        this.cty = cty;
+    public Address(String city, String street, String zipcode) {
+        this.city = city;
         this.street = street;
         this.zipcode = zipcode;
     }
