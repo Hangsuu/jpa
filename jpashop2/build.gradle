@@ -45,6 +45,8 @@ dependencies {
 	implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
 	// Hibernate Validator
 	implementation 'org.hibernate.validator:hibernate-validator:7.0.4.Final'
+	// Hibernate5 module
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
 }
 
 tasks.named('test') {
