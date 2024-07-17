@@ -102,4 +102,19 @@ public class OrderRepository {
                         "fetch o.delivery d", Order.class
         ).getResultList();
     }
+
+    public List<Order> findAllWithItem() {
+        return em.createQuery(
+                "select distinct o from Order o " +
+                        "join fetch o.member m " +
+                        "join fetch o.delivery d " +
+                        "join fetch o.orderItems oi " +
+                        "join fetch oi.item i", Order.class)
+                // 컬렉션 페치 조인을 사용하면 페이징 불가
+                // 쿼리를 보면 limit 등 페이지네이션 처리를 하지 않음
+                // WARN을 보면 memory에서 소팅을 수행한다고 나옴(데이터가 많아지면 메모리 out)
+                .setFirstResult(1)
+                .setMaxResults(100)
+                .getResultList();
+    }
 }
