@@ -13,6 +13,8 @@ spring:
 #        show_sql: true
         format_sql: true
         dialect: org.hibernate.dialect.H2Dialect
+        # number of in() query
+        default_batch_fetch_size: 100
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
