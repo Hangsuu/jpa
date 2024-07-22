@@ -15,6 +15,7 @@ spring:
         dialect: org.hibernate.dialect.H2Dialect
         # number of in() query
         default_batch_fetch_size: 100
+    open-in-view: false
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
