@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of= {"id", "username", "age"})
+@ToString(of= {"id", "userName", "age"})
 public class Member {
     @Id @GeneratedValue
     @Column(name = "member_id")
