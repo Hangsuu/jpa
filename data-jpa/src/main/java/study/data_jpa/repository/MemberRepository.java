@@ -1,6 +1,8 @@
 package study.data_jpa.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import study.data_jpa.entity.Member;
 
 import java.util.List;
@@ -10,4 +12,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     List<Member> findByUserNameAndAgeGreaterThan(String userName, int age);
     // 전체 조회 (find...by, ...에 아무거나 들어가도 됨)
     List<Member> findTop3HelloBy();
+
+//    없어도 메서드 명으로 알아서 찾아줌, 네임드 쿼리가 없어도 메서드명으로 쿼리 만들어줌
+//    @Query(name = "Member.findByUserName")
+    List<Member> findByUserName(@Param("userName") String userName);
 }
