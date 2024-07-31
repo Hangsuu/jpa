@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import study.data_jpa.dto.MemberDto;
@@ -48,5 +49,9 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     // 성능 향상을 위해 count 쿼리 분리(join 등 최적화)
     @Query(value="select m from Member m left join m.team t where m.age = :age",
             countQuery = "select count(m) from Member m")
-    Page<Member> findQueryByAge(int age, PageRequest pageRequest);
+    Page<Member> findQueryByAge(@Param("age") int age, PageRequest pageRequest);
+
+    @Modifying(clearAutomatically = true) // update query에서 넣어줘야됨
+    @Query("update Member m set m.age = m.age + 1 where m.age >= :age")
+    int bulkAgePlus(@Param("age") int age);
 }

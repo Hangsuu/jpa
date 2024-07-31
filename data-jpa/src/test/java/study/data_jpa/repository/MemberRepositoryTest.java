@@ -1,5 +1,7 @@
 package study.data_jpa.repository;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,6 +30,8 @@ class MemberRepositoryTest {
     MemberRepository memberRepository;
     @Autowired
     TeamRepository teamRepository;
+    @PersistenceContext
+    EntityManager em;
 
     @Test
     public void testMember() {
@@ -221,5 +225,28 @@ class MemberRepositoryTest {
 
         // Map 활용해서 Dto로 변환
         Page<MemberDto> toMap = page.map(member -> new MemberDto(member.getId(), member.getUserName(), null));
+    }
+
+    @Test
+    public void bulkUpdate() {
+        //given
+        memberRepository.save(new Member("member1", 10));
+        memberRepository.save(new Member("member2", 19));
+        memberRepository.save(new Member("member3", 20));
+        memberRepository.save(new Member("member4", 21));
+        memberRepository.save(new Member("member5", 40));
+
+        //when
+        int resultCount = memberRepository.bulkAgePlus(20);
+        
+        List<Member> result = memberRepository.findByUserName("member5");
+        Member member5 = result.get(0);
+        // update는 db에 바로 적용시키고 member5는 영속성 컨텍스트에 의해 40살로 반영돼있음
+        // EntityManager를 이용해 clear로 해결 또는 clearAutomatically true
+//        em.clear();
+        System.out.println("member5 = " + member5);
+
+        //then
+        assertThat(resultCount).isEqualTo(3);
     }
 }
