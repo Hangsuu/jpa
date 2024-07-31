@@ -1,5 +1,9 @@
 package study.data_jpa.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -35,4 +39,14 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     List<Member> findListByUserName(String userName); // Collection
     Member findMemberByUserName(String userName); // 단건
     Optional<Member> findOptionalByUserName(String userName); // Optional
+
+    Page<Member> findByAge(int age, Pageable pageable);
+    Slice<Member> findSliceByAge(int age, Pageable pageable);
+
+    List<Member> findListByAge(int age, PageRequest pageRequest);
+
+    // 성능 향상을 위해 count 쿼리 분리(join 등 최적화)
+    @Query(value="select m from Member m left join m.team t where m.age = :age",
+            countQuery = "select count(m) from Member m")
+    Page<Member> findQueryByAge(int age, PageRequest pageRequest);
 }
