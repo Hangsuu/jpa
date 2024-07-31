@@ -11,6 +11,7 @@ import study.data_jpa.entity.Team;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -150,5 +151,24 @@ class MemberRepositoryTest {
         for (Member member : result) {
             System.out.println("member = " + member);
         }
+    }
+
+    @Test
+    public void returnType() {
+        Member m1 = new Member("AAA", 10);
+        Member m2 = new Member("BBB", 20);
+        memberRepository.save(m1);
+        memberRepository.save(m2);
+
+        List<Member> resultList = memberRepository.findListByUserName("AAA");
+        for (Member member : resultList) {
+            System.out.println("member = " + member);
+        }
+
+        Member resultObject = memberRepository.findMemberByUserName("AAA");
+        System.out.println("findMember = " + resultObject);
+
+        Optional<Member> resultOptional = memberRepository.findOptionalByUserName("AAA");
+        System.out.println("resultOptional = " + resultOptional);
     }
 }
