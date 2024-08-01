@@ -249,4 +249,78 @@ class MemberRepositoryTest {
         //then
         assertThat(resultCount).isEqualTo(3);
     }
+
+    @Test
+    public void findMemberLazy() {
+        //given
+        // member1 -> teamA
+        // member2 -> teamb
+        Team teamA = new Team("teamA");
+        Team teamB = new Team("teamB");
+        teamRepository.save(teamA);
+        teamRepository.save(teamB);
+
+        Member member1 = new Member("member1", 10, teamA);
+        Member member2 = new Member("member2", 10, teamB);
+
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+
+        em.flush();
+        em.clear();
+
+//        //when N+1
+//        // select Member 1
+//        List<Member> members = memberRepository.findAll();
+//        for (Member member : members) {
+//            System.out.println("member = " + member);
+//            System.out.println("member.teamClass = " + member.getTeam().getClass());
+//            System.out.println("member.team = " + member.getTeam().getName());
+//        }
+
+        //when fetch join
+        // select Member 1
+        List<Member> membersFetch = memberRepository.findMemberFetchJoin();
+        for (Member member : membersFetch) {
+            System.out.println("member = " + member);
+            System.out.println("member.teamClass = " + member.getTeam().getClass());
+            System.out.println("member.team = " + member.getTeam().getName());
+        }
+
+        //when EntityGraph Override
+        // select Member 1
+        List<Member> members = memberRepository.findAll();
+        for (Member member : members) {
+            System.out.println("member = " + member);
+            System.out.println("member.teamClass = " + member.getTeam().getClass());
+            System.out.println("member.team = " + member.getTeam().getName());
+        }
+
+        //when EntityGraph with query
+        // select Member 1
+        List<Member> membersEntityGraph = memberRepository.findMemberEntityGraph();
+        for (Member member : membersEntityGraph) {
+            System.out.println("member = " + member);
+            System.out.println("member.teamClass = " + member.getTeam().getClass());
+            System.out.println("member.team = " + member.getTeam().getName());
+        }
+
+        //when EntityGraph with query
+        // select Member 1
+        List<Member> membersEntityGraphWithoutQuery = memberRepository.findEntityGraphByUserName("member1");
+        for (Member member : membersEntityGraphWithoutQuery) {
+            System.out.println("member = " + member);
+            System.out.println("member.teamClass = " + member.getTeam().getClass());
+            System.out.println("member.team = " + member.getTeam().getName());
+        }
+
+        //when named EntityGraph
+        // select Member 1
+        List<Member> membersNamedEntityGraph = memberRepository.findNamedEntityGraphByUserName("member1");
+        for (Member member : membersNamedEntityGraph) {
+            System.out.println("member = " + member);
+            System.out.println("member.teamClass = " + member.getTeam().getClass());
+            System.out.println("member.team = " + member.getTeam().getName());
+        }
+    }
 }
