@@ -353,4 +353,9 @@ class MemberRepositoryTest {
         // for update 달아줌
         List<Member> result = memberRepository.findLockByUserName("member1");
     }
+
+    @Test
+    public void callCustom() {
+        List<Member> result = memberRepository.findMemberCustom();
+    }
 }
