@@ -18,7 +18,7 @@ public class MemberSpec {
                     return null;
                 }
 
-                Join<Member, Team> t = root.join("team", JoinType.INNER.INNER);// 회원과 조인
+                Join<Member, Team> t = root.join("team", JoinType.INNER);// 회원과 조인
                 return criteriaBuilder.equal(t.get("name"), teamName);
             }
         };
