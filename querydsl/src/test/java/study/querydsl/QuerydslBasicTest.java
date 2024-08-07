@@ -14,6 +14,7 @@ import study.querydsl.entity.Team;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static study.querydsl.entity.QMember.member;
 
@@ -143,5 +144,32 @@ public class QuerydslBasicTest {
         assertThat(member5.getUserName()).isEqualTo("member5");
         assertThat(member6.getUserName()).isEqualTo("member6");
         assertThat(memberNull.getUserName()).isNull();
+    }
+
+    @Test
+    public void paging1() {
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .orderBy(member.userName.desc())
+                .offset(1)
+                .limit(2)
+                .fetch();
+
+        assertThat(result).hasSize(2);
+    }
+
+    @Test
+    public void paging2() {
+        QueryResults<Member> queryResults = queryFactory
+                .selectFrom(member)
+                .orderBy(member.userName.desc())
+                .offset(1)
+                .limit(2)
+                .fetchResults();
+
+        assertThat(queryResults.getTotal()).isEqualTo(4);
+        assertThat(queryResults.getLimit()).isEqualTo(2);
+        assertThat(queryResults.getOffset()).isEqualTo(1);
+        assertThat(queryResults.getResults()).hasSize(2);
     }
 }
