@@ -12,17 +12,20 @@ import study.querydsl.entity.QMember;
 import study.querydsl.entity.Team;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static study.querydsl.entity.QMember.member;
 
 @SpringBootTest
 @Transactional
 public class QuerydslBasicTest {
     @PersistenceContext
     EntityManager em;
-    JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+    JPAQueryFactory queryFactory;
 
 
     @BeforeEach
     public void before() {
+        queryFactory = new JPAQueryFactory(em);
+
         Team teamA = new Team("teamA");
         Team teamB = new Team("teamB");
         em.persist(teamA);
@@ -60,6 +63,31 @@ public class QuerydslBasicTest {
                 .select(m)
                 .from(m)
                 .where(m.userName.eq("member1")) // 파라미터 바인딩 처리
+                .fetchOne();
+
+        assertThat(findMember.getUserName()).isEqualTo("member1");
+    }
+
+    @Test
+    public void search() {
+        Member findMember = queryFactory
+                .selectFrom(member)
+                .where(member.userName.eq("member1")
+                        .and(member.age.between(10, 30)))
+                .fetchOne();
+
+        assertThat(findMember.getUserName()).isEqualTo("member1");
+    }
+
+    @Test
+    public void searchAndParam() {
+        // null을 무시하기 때문에 동적 쿼리 만들 때 좋다
+        Member findMember = queryFactory
+                .selectFrom(member)
+                .where(
+                        member.userName.eq("member1"),
+                        member.age.eq(10)
+                )
                 .fetchOne();
 
         assertThat(findMember.getUserName()).isEqualTo("member1");
