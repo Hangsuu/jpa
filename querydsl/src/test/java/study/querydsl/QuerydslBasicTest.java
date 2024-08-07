@@ -54,7 +54,7 @@ public class QuerydslBasicTest {
 
     @Test
     public void startQuerydsl() {
-
+        // jpql에서 m이 alias로 나오게 됨(조인할 때 신경써야됨)
         QMember m = new QMember("m");
         Member findMember = queryFactory
                 .select(m)
